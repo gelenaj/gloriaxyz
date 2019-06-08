@@ -3,11 +3,42 @@
     <dimen name="detail_title_text_size">32sp</dimen>
     <dimen name="detail_body_text_size">22sp</dimen>
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
-
     <dimen name="fab_elevation">2dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="app_bar_height">112dp</dimen>
     <dimen name="app_bar_elevation">4dp</dimen>
-
+    <dimen name="imagebuttonWidth">56dp</dimen>
+    <dimen name="rvPaddingBottom">28dp</dimen>
+    <dimen name="imageViewHeight">400dp</dimen>
+    <dimen name="dividerHeight">200dp</dimen>
+    <dimen name="articleDividerHeight">1dp</dimen>
+    <dimen name="dividerMarginTop">2dp</dimen>
+    <dimen name="articlePadding">16dp</dimen>
+    <dimen name="articlePaddingBottom">4dp</dimen>
+    <dimen name="imageWlandscape">200dp</dimen>
+    <dimen name="largLayoutPadding">2dp</dimen>
+    <dimen name="largeImageWidth">200dp</dimen>
+    <dimen name="card_margin">4dp</dimen>
+    <dimen name="card_elevation">0dp</dimen>
+    <dimen name="card_margin_l_r">0dp</dimen>
+    <dimen name="card_padding">16dp</dimen>
+    <dimen name="progress_bar_w_h">50dp</dimen>
+    <dimen name="detail_image_w_h">56dp</dimen>
+    <dimen name="framelayout_m_bottom">16dp</dimen>
+    <dimen name="framelayout_m_top">40dp</dimen>
+    <dimen name="fab">56dp</dimen>
+    <dimen name="appbar_h">300dp</dimen>
+    <dimen name="collapsing_tb_title_m">64dp</dimen>
+    <dimen name="collapsing_tb_title_m_Start">48dp</dimen>
+    <dimen name="maxwidth_linear_elevation">8dp</dimen>
+    <dimen name="cardview_layout_m">4dp</dimen>
+    <dimen name="subtitle_m_top">4dp</dimen>
+    <dimen name="subtitle_m_bottom">8dp</dimen>
+    <dimen name="subtitle_m">16dp</dimen>
+    <dimen name="title_h">32sp</dimen>
+    <dimen name="title_m_start">16dp</dimen>
+    <dimen name="title_m_end">16dp</dimen>
+    <dimen name="title_m_top">4dp</dimen>
+    <dimen name="subtitle_m_bottom">8dp</dimen>
 </resources>

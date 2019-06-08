@@ -2,11 +2,29 @@
 
     <string name="app_name">XYZ Reader</string>
     <string name="welcome_xyz_reader">Welcome to XYZ Reader!</string>
-
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
-
     <string name="up">Up</string>
+    <string name="details_body_html_prefix">
+        <![CDATA[<![CDATA[
+        <html>
+        <head>
+        <style type=\"text/css\">
+
+        body {
+        text-align: ]]>%2$s<![CDATA[;
+        margin: ]]>%3$d<![CDATA[;
+        padding: ]]>%4$d<![CDATA[;
+        color: ]]>%5$s<![CDATA[
+        }
+        </style>
+        </head>
+        <body>]]></string>
+    <string name="details_body_html_suffix">
+        <![CDATA[<![CDATA[
+        </body>
+        </html>
+]]></string>
 
 </resources>
