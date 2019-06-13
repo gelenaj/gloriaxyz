@@ -3,7 +3,7 @@
     <dimen name="detail_title_text_size">32sp</dimen>
     <dimen name="detail_body_text_size">22sp</dimen>
     <item name="detail_body_line_spacing_multiplier" format="float" type="fraction">1.25</item>
-    <dimen name="fab_elevation">2dp</dimen>
+    <dimen name="fab_elevation">6dp</dimen>
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="app_bar_height">112dp</dimen>
@@ -28,13 +28,12 @@
     <dimen name="framelayout_m_bottom">16dp</dimen>
     <dimen name="framelayout_m_top">40dp</dimen>
     <dimen name="fab">56dp</dimen>
-    <dimen name="appbar_h">300dp</dimen>
+    <dimen name="appbar_h">168dp</dimen>
     <dimen name="collapsing_tb_title_m">64dp</dimen>
     <dimen name="collapsing_tb_title_m_Start">48dp</dimen>
     <dimen name="maxwidth_linear_elevation">8dp</dimen>
     <dimen name="cardview_layout_m">4dp</dimen>
     <dimen name="subtitle_m_top">4dp</dimen>
-    <dimen name="subtitle_m_bottom">8dp</dimen>
     <dimen name="subtitle_m">16dp</dimen>
     <dimen name="title_h">32sp</dimen>
     <dimen name="title_m_start">16dp</dimen>
