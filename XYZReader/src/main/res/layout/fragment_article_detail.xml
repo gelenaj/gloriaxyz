@@ -56,7 +56,6 @@
             android:maxWidth="@dimen/detail_card_max_width"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:id="@+id/meta_bar"
                 android:layout_width="match_parent"
