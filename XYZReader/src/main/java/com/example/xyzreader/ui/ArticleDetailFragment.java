@@ -7,11 +7,11 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v7.graphics.Palette;
 import android.text.Html;
@@ -26,38 +26,27 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-/**
- * A fragment representing a single Article detail screen. This fragment is
- * either contained in a {@link ArticleListActivity} in two-pane mode (on
- * tablets) or a {@link ArticleDetailActivity} on handsets.
- */
 public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     private static final String TAG = "ArticleDetailFragment";
-
     public static final String ARG_ITEM_ID = "item_id";
-    private static final float PARALLAX_FACTOR = 1.25f;
 
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
-
     private ObservableScrollView mScrollView;
-    private DrawInsetsFrameLayout mDrawInsetsFrameLayout;
+    private CoordinatorLayout mCoordinatorLayout;
     private ColorDrawable mStatusBarColorDrawable;
-
     private int mTopInset;
     private View mPhotoContainerView;
     private ImageView mPhotoView;
@@ -67,15 +56,9 @@ public class ArticleDetailFragment extends Fragment implements
     WebView mBodyWebView;
     private Activity mHostActivity;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss", Locale.US);
-    // Use default locale format
     private SimpleDateFormat outputFormat = new SimpleDateFormat();
-    // Most time functions can only handle 1902 - 2037
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public ArticleDetailFragment() {
     }
 
@@ -109,11 +92,6 @@ public class ArticleDetailFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        // In support library r8, calling initLoader for a fragment in a FragmentPagerAdapter in
-        // the fragment's onCreate may cause the same LoaderManager to be dealt to multiple
-        // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
-        // we do this in onActivityCreated.
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -122,25 +100,8 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
-        mDrawInsetsFrameLayout =
-                mRootView.findViewById(R.id.draw_insets_frame_layout);
-        mDrawInsetsFrameLayout.setOnInsetsCallback(new DrawInsetsFrameLayout.OnInsetsCallback() {
-            @Override
-            public void onInsetsChanged(Rect insets) {
-                mTopInset = insets.top;
-            }
-        });
-
-        mScrollView = mRootView.findViewById(R.id.scrollview);
-        mScrollView.setCallbacks(new ObservableScrollView.Callbacks() {
-            @Override
-            public void onScrollChanged() {
-                mScrollY = mScrollView.getScrollY();
-                getActivityCast().onUpButtonFloorChanged(mItemId, ArticleDetailFragment.this);
-                mPhotoContainerView.setTranslationY((int) (mScrollY - mScrollY / PARALLAX_FACTOR));
-                updateStatusBar();
-            }
-        });
+        mCoordinatorLayout =
+                mRootView.findViewById(R.id.coordinatorLayoutFragDetail);
 
         mPhotoView = mRootView.findViewById(R.id.photo);
         mPhotoContainerView = mRootView.findViewById(R.id.photoContainer);
@@ -168,7 +129,8 @@ public class ArticleDetailFragment extends Fragment implements
                     mStatusBarFullOpacityBottom - mTopInset);
         }
         mStatusBarColorDrawable.setColor(color);
-        mDrawInsetsFrameLayout.setInsetBackground(mStatusBarColorDrawable);
+        mCoordinatorLayout.setBackground(mStatusBarColorDrawable);
+
     }
 
     static float progress(float v, float min, float max) {
@@ -204,10 +166,7 @@ public class ArticleDetailFragment extends Fragment implements
         TextView titleView = mRootView.findViewById(R.id.article_title);
         TextView bylineView = mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
-        WebView mBodyWebView = (WebView) mRootView.findViewById(R.id.article_body);
-
-
-        //mBodyWebView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Roboto-Regular.ttf"));
+        WebView mBodyWebView = mRootView.findViewById(R.id.article_body);
 
         if (mCursor != null) {
 
@@ -224,15 +183,12 @@ public class ArticleDetailFragment extends Fragment implements
                                 + "</font>"));
 
             } else {
-                // If date is before 1902, just show the string
                 bylineView.setText(Html.fromHtml(
                         outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)
                                 + "</font>"));
-
             }
-            //bodyView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
-            //mScrollPosition = getSavedScrollPosition();
+
             WebViewClient wvClient = new WebViewClient();
             mBodyWebView.setWebViewClient(wvClient);
             String htmlString = formatBodyText(mCursor.getString(ArticleLoader.Query.BODY), true);
@@ -247,7 +203,6 @@ public class ArticleDetailFragment extends Fragment implements
             Picasso.with(getActivity())
                     .load(mCursor.getString(ArticleLoader.Query.PHOTO_URL))
                     .placeholder(getResources().getDrawable(R.drawable.empty_detail))
-
                     .resize(width, height / 3)
                     .centerCrop()
                     .into(mPhotoView, new Callback() {
@@ -257,9 +212,6 @@ public class ArticleDetailFragment extends Fragment implements
                             Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
                                 @Override
                                 public void onGenerated(@NonNull Palette palette) {
-
-                                    mRootView.findViewById(R.id.meta_bar)
-                                            .setBackgroundColor(getResources().getColor(R.color.theme_primary));
                                     updateStatusBar();
                                 }
                             });
@@ -267,8 +219,6 @@ public class ArticleDetailFragment extends Fragment implements
 
                         @Override
                         public void onError() {
-                            mRootView.findViewById(R.id.meta_bar)
-                                    .setBackgroundColor(getResources().getColor(android.R.color.black));
                             updateStatusBar();
                         }
                     });
@@ -278,7 +228,6 @@ public class ArticleDetailFragment extends Fragment implements
             mRootView.setVisibility(View.GONE);
             titleView.setText("N/A");
             bylineView.setText("N/A");
-            //mBodyWebView.setText("N/A");
         }
     }
 

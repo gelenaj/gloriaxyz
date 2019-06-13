@@ -27,7 +27,8 @@
             android:layout_height="@dimen/detail_image_w_h"
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/up"
-            android:src="@drawable/ic_arrow_back"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </FrameLayout>
 </FrameLayout>

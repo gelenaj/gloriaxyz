@@ -40,4 +40,5 @@
     <dimen name="title_m_end">16dp</dimen>
     <dimen name="title_m_top">4dp</dimen>
     <dimen name="subtitle_m_bottom">8dp</dimen>
+    <dimen name="app_bar_land">300dp</dimen>
 </resources>
